@@ -22,30 +22,25 @@ services:
       - zookeeper
   postgresqldb:
     image: 'postgres:13.1-alpine'
-    #    container_name: db
     ports:
       - '5432:5432'
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
-  #  driver-location:
-  #    container_name: driver-location
-  #    image: driver-location:latest
-  #    build: .
-  #    depends_on:
-  #      - kafka
-  #      - zookeeper
-  #      - postgresqldb
-  ##    links:
-  ##      - kafka
-  ##      - zookeeper
-  ##      - postgresqldb
-  #    ports:
-  #      - "8080:8080"
-  #    environment:
-  #      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
-  #      - SPRING_POSTGRES_URL=jdbc:postgresql://postgresqldb:5432/postgres
+  driver-location:
+    container_name: driver-location
+    image: driver-location:latest
+    build: .
+    depends_on:
+      - kafka
+      - zookeeper
+      - postgresqldb
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - SPRING_POSTGRES_URL=jdbc:postgresql://postgresqldb:5432/postgres
   driver-location-forwarder:
     container_name: driver-location-forwarder
     image: driver-location-forwarder:latest
